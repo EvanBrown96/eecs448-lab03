@@ -1,0 +1,32 @@
+.profile-section {
+
+  background-color: lightgray;
+  padding: 1vw;
+  border-radius: 1vw;
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+}
+
+.profile-section.top {
+  margin-top: 0vw;
+}
+
+.profile-section.bottom {
+  margin-bottom: 0vw;
+}
+
+#fun {
+  background-image: url(/~e329b498/eecs448/piano.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  font-family: "Comic Sans MS";
+}
+
+#links a{
+  color: white;
+}
+
+#links a:hover{
+  color: green;
+  background-color: white;
+}
