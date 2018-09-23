@@ -23,25 +23,32 @@
     </div>
 
     <div class="container" style="background-color: navy; padding: 2vw; border-radius: 1vw">
-      <div class="container" style="background-color: lightgray; padding: 1vw; border-radius: 1vw; margin-bottom: 2vw;">
-        <p id="mess-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="container" id="mess-text" style="background-color: lightgray; padding: 1vw; border-radius: 1vw; margin-bottom: 2vw;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </div>
 
       <div class="container" style="background-color: lightgray; padding: 1vw; border-radius: 1vw; margin-top: 2vw;">
-        <h4>Border Styling</h4>
-        <form class="form-inline">
-          <input type="text" class="form-control" id="border-r" placeholder="Red (00-FF)"/>
-          <input type="text" class="form-control" id="border-g" placeholder="Green (00-FF)"/>
-          <input type="text" class="form-control" id="border-b" placeholder="Blue (00-FF)"/>
-          <input type="number" class="form-control" id="border-w" placeholder="Width (px)"/>
-        </form>
-        
-        <h4>Background Styling</h4>
-        <form class="form-inline">
-          <input type="text" class="form-control" id="bg-r" placeholder="Red (00-FF)"/>
-          <input type="text" class="form-control" id="bg-g" placeholder="Green (00-FF)"/>
-          <input type="text" class="form-control" id="bg-b" placeholder="Blue (00-FF)"/>
-        </form>
+
+        <div>
+          <h4>Border Styling</h4>
+          <form class="form-inline">
+            <input type="text" pattern="[a-fA-F\d]+" class="form-control" id="border-r" placeholder="Red (00-FF)"/>
+            <input type="text" class="form-control" id="border-g" placeholder="Green (00-FF)"/>
+            <input type="text" class="form-control" id="border-b" placeholder="Blue (00-FF)"/>
+            <input type="number" class="form-control" id="border-w" placeholder="Width (px)"/>
+          </form>
+        </div>
+
+        <div style="margin-top: 1vw; margin-bottom: 1vw">
+          <h4>Background Styling</h4>
+          <form class="form-inline">
+            <input type="text" class="form-control" id="bg-r" placeholder="Red (00-FF)"/>
+            <input type="text" class="form-control" id="bg-g" placeholder="Green (00-FF)"/>
+            <input type="text" class="form-control" id="bg-b" placeholder="Blue (00-FF)"/>
+          </form>
+        </div>
+
+        <button type="button" class="btn-success" onclick="submitStyling();">Submit</button>
 
       </div>
 
@@ -54,6 +61,62 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <script>
+
+      let text_elem = document.getElementById('mess-text');
+
+      let border_rgb_elems = [$('#border-r'),
+                              $('#border-g'),
+                              $('#border-b')];
+      let border_w_elem = document.getElementById('border-w');
+
+      let bg_rgb_elems = [$('#bg-r'),
+                          $('#bg-g'),
+                          $('#bg-b')];
+
+      let hex_test = new RegExp("^[0-9A-Fa-f]{2}$");
+
+      function submitStyling(){
+
+        let error = false;
+        let border_hex = "#";
+        let bg_hex = "#";
+
+        for(let elem of border_rgb_elems){
+          if(!hex_test.test(elem.val())){
+            errorField(elem, "Invalid Hex Value");
+            error = true;
+          }
+          else{
+            border_hex += elem.val();
+            resetField(elem);
+          }
+        }
+
+        for(let elem of bg_rgb_elems){
+          if(!hex_test.test(elem.val())){
+            errorField(elem, "Invalid Hex Value");
+            error = true;
+          }
+          else{
+            bg_hex += elem.val();
+            resetField(elem);
+          }
+        }
+
+      }
+
+      function resetField(elem){
+        elem.popover('hide');
+        elem.css("borderColor", "#ced4da");
+        elem.css("backgroundColor", "white");
+      }
+
+      function errorField(elem, error_text){
+        elem.popover({content: error_text, placement: "top", trigger: "manual"});
+        elem.popover('show');
+        elem.css("borderColor", "red");
+        elem.css("backgroundColor", "lightcoral");
+      }
 
     </script>
   </body>
